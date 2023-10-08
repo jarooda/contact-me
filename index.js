@@ -14,7 +14,7 @@ app.use(
   })
 )
 app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
+app.use(express.urlencoded({ extended: false }))
 
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST,
@@ -37,7 +37,10 @@ transporter.verify(function (error) {
 app.post("/send", (req, res) => {
   const { name, email, message } = req.body
   if (!name || !email || !message) {
-    res.status(400).send("Missing fields!")
+    res.status(400).json({
+      message: "Missing fields!"
+    })
+    return
   }
 
   const mail = {
@@ -51,9 +54,13 @@ app.post("/send", (req, res) => {
   transporter.sendMail(mail, (err ) => {
     if (err) {
       console.log(err)
-      res.status(500).send("Something went wrong.")
+      res.status(500).json({
+        message: "Something went wrong."
+      })
     } else {
-      res.status(200).send("Email successfully sent to recipient!")
+      res.status(200).json({
+        message: "Email sent!"
+      })
     }
   })
 })
