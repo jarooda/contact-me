@@ -40,20 +40,21 @@ app.post("/send", (req, res) => {
   }
 
   const mail = {
-    from: name,
-    to: process.env.SMTP_EMAIL,
-    subject: `Message from ${ name } - ${ email }`,
+    from: process.env.SMTP_EMAIL,
+    to: process.env.RECIPIENT_EMAIL,
+    subject: `Message from ${name} - ${email}`,
     text: message,
     replyTo: email
   }
 
-  transporter.sendMail(mail, (err ) => {
+  transporter.sendMail(mail, (err) => {
     if (err) {
       console.log(err)
       res.status(500).json({
         message: "Something went wrong."
       })
     } else {
+      console.log("Email sent!", mail)
       res.status(200).json({
         message: "Email sent!"
       })
