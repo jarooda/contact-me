@@ -42,9 +42,8 @@ app.post("/send", (req, res) => {
 
   const bodyMessage = `
   name: ${j.capitalize(name)}
-  email: ${email}
-  message: ${message}
-  `
+message: ${message}
+`
 
   const mail = {
     from: process.env.SMTP_EMAIL,
