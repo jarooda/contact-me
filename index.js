@@ -6,6 +6,7 @@ if (process.env.NODE_ENV != "production") {
 const express = require("express")
 const cors = require("cors")
 const nodemailer = require("nodemailer")
+const j = require("jalutils")
 const app = express()
 
 app.use(cors())
@@ -39,11 +40,17 @@ app.post("/send", (req, res) => {
     return
   }
 
+  const bodyMessage = `
+  name: ${j.capitalize(name)}
+  email: ${email}
+  message: ${message}
+  `
+
   const mail = {
     from: process.env.SMTP_EMAIL,
     to: process.env.RECIPIENT_EMAIL,
-    subject: `Message from ${name} - ${email}`,
-    text: message,
+    subject: `Message from ${email}`,
+    text: bodyMessage,
     replyTo: email
   }
 
