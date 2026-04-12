@@ -1,0 +1,25 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    open-pull-requests-limit: 10
+    pull-request-branch-name:
+      separator: "/"
+    allow:
+      - dependency-type: "production"
+    ignore:
+      - dependency-name: "*"
+        update-types:
+          - "version-update:semver-minor"
+          - "version-update:semver-patch"
+    reviewers:
+      - "jarooda"
+    assignees:
+      - "jarooda"
+    commit-message:
+      prefix: "chore"
+      prefix-scope: "deps"
+    auto-merge: true
+    auto-merge-type: "squash"
