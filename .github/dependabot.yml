@@ -19,7 +19,4 @@ updates:
     assignees:
       - "jarooda"
     commit-message:
-      prefix: "chore"
-      prefix-scope: "deps"
-    auto-merge: true
-    auto-merge-type: "squash"
+      prefix: "chore(deps)"
