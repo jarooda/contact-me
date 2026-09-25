@@ -11,7 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
-    "dotenv": "^17.4.1",
+    "dotenv": "^18.0.2",
     "express": "^5.2.1",
     "jalutils": "^1.0.0",
     "nodemailer": "^10.0.1"
