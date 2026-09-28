@@ -92,7 +92,23 @@ app.get("/api/weather", async (req, res) => {
       );
     }
 
-    res.json(data);
+    const {
+      weather,
+      main,
+      visibility,
+      wind,
+      clouds,
+      sys,
+    } = data
+
+    res.json({
+      weather,
+      main,
+      visibility,
+      wind,
+      clouds,
+      sys
+    });
   } catch (error) {
     console.error(error);
 
