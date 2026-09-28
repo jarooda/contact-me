@@ -68,6 +68,41 @@ message: ${message}
   })
 })
 
+const OPENWEATHER_API_KEY = process.env.OPENWEATHER_API_KEY;
+// location
+const LAT = process.env.LAT;
+const LON = process.env.LONG;
+
+app.get("/api/weather", async (req, res) => {
+  try {
+    const response = await fetch(
+      `https://api.openweathermap.org/data/2.5/weather?lat=${LAT}&lon=${LON}&units=metric&appid=${OPENWEATHER_API_KEY}`
+    );
+
+    if (!response.ok) {
+      throw new Error(`OpenWeather error: ${response.status}`);
+    }
+
+    const data = await response.json();
+
+    if (!("refresh" in req.query)) {
+      res.set(
+        "Cache-Control",
+        "public, s-maxage=3600, stale-while-revalidate=86400"
+      );
+    }
+
+    res.json(data);
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      error: "Failed to fetch weather",
+    });
+  }
+});
+
+
 const port = process.env.PORT || 3000
 app.listen(port, () => {
   console.log(`App listening at ${port}`)
